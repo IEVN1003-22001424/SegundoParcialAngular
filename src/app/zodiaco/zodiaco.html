@@ -1,0 +1,50 @@
+<div class="flex justify-center gap-7">
+
+    <div class=" max-w-xl p-20 border shadow-xs">
+        <h1 class="font-bold">Datos Personales</h1>
+        <br>
+        <form action="">
+            <label for="">Nombre</label><input class="m-1" type="text" name="nombre" id="nombre" placeholder="Nombre" [(ngModel)]="nombre"><br>
+            <label for="">Apellido Paterno</label><input class="m-1" type="text" name="APaterno" id="APaterno" placeholder="Apellido Paterno" [(ngModel)]="apaterno"><br>
+            <label for="">Apellido Materno</label><input class="m-1" type="text" name="AMaterno" id="AMaterno" placeholder="Apellido Materno" [(ngModel)]="amaterno"><br><br>
+
+            
+            <h3 class="font-bold">Fecha de Nacimiento</h3>
+            <div class="flex">
+                <div>
+                    <label for="">Día:</label><br>
+                    <input class="m-1 w-20" type="number" name="Dia" id="Dia" placeholder="Día" [(ngModel)]="dia">
+                </div>
+
+                <div>
+                    <label for="">Mes:</label><br>
+                    <input class="m-1 w-20" type="number" name="Mes" id="Mes" placeholder="Mes" [(ngModel)]="mes">
+                </div>
+
+                <div>
+                    <label for="">Año:</label><br>
+                    <input class="m-1 w-20" type="number" name="Ano" id="Ano" placeholder="Año" [(ngModel)]="ano">
+                </div>
+            </div>
+            <br>
+
+            <h3 class="font-bold">Sexo</h3>
+            <label for="">Masculino:<input class="m-1" type="radio" name="Sexo" value="Masculino" [(ngModel)]="sexo"></label>
+            <label for="">Femenino:<input class="m-1" type="radio" name="Sexo" value="Femenino" [(ngModel)]="sexo"></label>
+        </form>
+        <br>
+
+        <button type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" (click)="Imprimir()">
+            Imprimir
+        </button>
+    </div>
+
+    <div class="max-w-xl p-30 border shadow-xs">
+        <div *ngIf="mostrar" >
+            <p>Hola {{sex}}, <span class="font-bold">{{nc}}</span></p>
+            <p>Tienes: <span class="font-bold">{{edad}}</span> años</p>
+            <p>y tu signo Zodiacal es: <span class="font-bold">{{signo}}</span></p>
+            <img [src]="Imagen" alt="">
+        </div>
+    </div>
+</div>
