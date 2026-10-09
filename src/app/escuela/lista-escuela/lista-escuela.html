@@ -1,0 +1,133 @@
+
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow">
+
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">
+    Lista de alumnos
+  </h1>
+
+  <form [formGroup]="formulario">
+
+    <!-- Matrícula -->
+    <div class="mb-5">
+
+      <label
+        for="matricula"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Matrícula
+      </label>
+
+      <input
+        type="text"
+        id="matricula"
+        name="matricula"
+        formControlName="matricula"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="Ingresa la matrícula"
+      >
+
+    </div>
+
+    <!-- Nombre -->
+    <div class="mb-5">
+
+      <label
+        for="nombre"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Nombre
+      </label>
+
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        formControlName="nombre"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="Ingresa el nombre del alumno"
+      >
+
+    </div>
+
+    <!-- Correo -->
+    <div class="mb-5">
+
+      <label
+        for="correo"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Correo electrónico
+      </label>
+
+      <input
+        type="text"
+        id="correo"
+        name="correo"
+        formControlName="correo"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="ejemplo@correo.com"
+      >
+
+    </div>
+
+    <!-- Materia -->
+    <div class="mb-5">
+
+      <label
+        for="materia"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Materia
+      </label>
+
+      
+      <input
+        type="text"
+        id="materia"
+        name="materia"
+        formControlName="materia"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="ejemplo@correo.com"
+      >
+    </div>
+
+    <!-- Botones -->
+    <div class="flex justify-end gap-3 mt-5">
+
+      <button
+        type="button"
+        class="text-blue-700 bg-white border border-blue-700
+               hover:bg-blue-50 focus:ring-4 focus:outline-none
+               focus:ring-blue-300 font-medium rounded-lg text-sm
+               px-5 py-2.5"
+      >
+        Cargar
+      </button>
+
+      <button
+        (click)="muestraAlumno()"
+        type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800
+               focus:ring-4 focus:outline-none focus:ring-blue-300
+               font-medium rounded-lg text-sm px-5 py-2.5
+               disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Registrar
+      </button>
+
+    </div>
+
+  </form>
+
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">
+    Lista de alumnos
+  </h1>
+  <h3>Matricula: {{nuevoAlumno.matricula}}</h3>
+  <h3>Nombre: {{nuevoAlumno.nombre}}</h3>
+  <h3>Correo: {{nuevoAlumno.correo}}</h3>
+  <h3>Materia: {{nuevoAlumno.materia}}</h3>
+</div>
