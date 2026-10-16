@@ -24,10 +24,10 @@
                 <label for="tarjeta-cineco" >Tarjeta Cineco: </label>
                 <div>
                     <label for="tarjeta-si">Sí</label>
-                    <input  class="m-2" type="radio" id="tarjeta-si" formControlName="tarjeta" value="si">
+                    <input  class="m-2" type="radio" id="tarjeta-si" formControlName="tarjeta" value="Si">
 
                     <label for="tarjeta-no">No</label>
-                    <input class="m-2" type="radio" id="tarjeta-no" formControlName="tarjeta" value="no">
+                    <input class="m-2" type="radio" id="tarjeta-no" formControlName="tarjeta" value="No">
                 </div>
 
             </form>
@@ -50,8 +50,9 @@
     <!-- Acciones -->
     <div class=" flex items-center justify-center m-5 font-bold text-white">
         <div class="p-6 border rounded shadow text-center gap-4">
-            <button class="m-2 bg-white text-black p-2 rounded hover:bg-blue-200 cursor-pointer active:scale-95" type="button" (click)="Calcular()">Procesar</button>
+            <button class="m-2 bg-white text-black p-2 rounded hover:bg-blue-200 cursor-pointer active:scale-95" type="button" (click)="MuestraCliente()">Procesar</button>
             <button class="m-2 bg-white text-black p-2 rounded hover:bg-blue-200 cursor-pointer active:scale-95" type="button" (click)="Salir()">Salir</button>
+            <a [routerLink]="['/escuela/ventas']" class="m-2 bg-white text-black p-2 rounded hover:bg-blue-200 cursor-pointer active:scale-95" type="button">Mostrar Ventas</a>
         </div>
     </div>
 

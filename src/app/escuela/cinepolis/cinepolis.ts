@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Cliente } from '../cliente';
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   selector: 'app-cinepolis',
   styleUrl: './cinepolis.css',
   templateUrl: './cinepolis.html',
@@ -22,6 +25,17 @@ export class Cinepolis {
     });
   }
 
+
+  cliente:Cliente[]=[]
+  nuevoCliente:Cliente = {
+    compradores: '',
+    nombre: '',
+    boletos: '',
+    total: '',
+    tarjeta: ''
+  };
+
+
   Calcular(): void {
 
     const precio= 12;
@@ -31,9 +45,21 @@ export class Cinepolis {
     const tarjeta = this.formularioc.value.tarjeta;
 
     //Condicion de Prueba
-    if(nombre == ''  ||  compradores == 0){
-      this.mensaje = 'No Haz llenado los campos, llenalos Porfavor :)';
+    if(
+
+      this.nuevoCliente.compradores == '' ||
+
+      this.nuevoCliente.nombre == '' ||
+
+      this.nuevoCliente.boletos == '' ||
+
+      this.nuevoCliente.tarjeta == '' 
+
+    ){
+
+      alert('Llena todos los campos porfavor');
       return;
+
     }
 
     //Condicion Inicial
@@ -61,9 +87,9 @@ export class Cinepolis {
     let descuentot = 0;
 
     //Tercera condicion
-    if (tarjeta == 'si'){
+    if (tarjeta == 'Si'){
       descuentot = 0.10;
-    }else if(tarjeta == 'no'){
+    }else if(tarjeta == 'No'){
       descuentot = 0;
     }
 
@@ -74,7 +100,27 @@ export class Cinepolis {
     this.total = totalpago;
     this.mensaje = 'Compra realizada correctamente';
     
+
+    this.nuevoCliente.total = String(this.total);
+    
+    this.cliente.push({...this.nuevoCliente});
+
+    localStorage.setItem(
+      'clientes',
+      JSON.stringify(this.cliente)
+    );
+    
     }
+
+  MuestraCliente(): void {
+    this.nuevoCliente.nombre = this.formularioc.value.nombre;
+    this.nuevoCliente.compradores = String(this.formularioc.value.compradores);
+    this.nuevoCliente.boletos = String(this.formularioc.value.boletos);
+    this.nuevoCliente.tarjeta = this.formularioc.value.tarjeta;
+
+
+    this.Calcular();
+  }
 
   Salir(): void {
     this.mensaje = '';

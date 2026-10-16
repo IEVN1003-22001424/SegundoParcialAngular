@@ -33,11 +33,6 @@ export const routes: Routes = [
                         (c) => c.ListaEscuela
                     ),
             },
-        ]
-    },
-    {
-        path: 'escuela',
-        children: [
             {
                 path: 'cinepolis',
                 loadComponent: () =>
@@ -45,8 +40,16 @@ export const routes: Routes = [
                         (c) => c.Cinepolis
                     ),
             },
+                        {
+                path: 'ventas',
+                loadComponent: () =>
+                    import('./escuela/ventas/ventas').then(
+                        (c) => c.Ventas
+                    ),
+            },
         ]
     },
+
 
     {path:'', redirectTo: 'admin', pathMatch: 'full'},
     {path: '**', redirectTo: 'admin' },

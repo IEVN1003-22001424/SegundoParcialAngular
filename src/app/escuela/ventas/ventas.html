@@ -1,0 +1,201 @@
+<!-- Formulario para editar clientes -->
+<br>
+
+<div
+  class="max-w-sm mx-auto space-y-4 p-5 bg-white rounded-lg shadow-md" *ngIf="ver"
+>
+  <form [formGroup]="formulario" (ngSubmit)="guardarCambios()">
+
+    <h1 class="font-bold text-center text-xl mb-4">Editar Clientes</h1>
+
+    <div>
+      <label for="nombre" class="block mb-1 text-sm font-medium text-heading">Nombre: </label>
+
+      <input formControlName="nombre" type="text" id="nombre"
+        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base block w-full px-3 py-2.5"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="compradores" class="block mb-1 text-sm font-medium text-heading">
+        Compradores
+      </label>
+
+      <input
+        formControlName="compradores"
+        type="text"
+        id="compradores"
+        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base block w-full px-3 py-2.5"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="boletos" class="block mb-1 text-sm font-medium text-heading">
+        Boletos
+      </label>
+
+      <input
+        formControlName="boletos"
+        type="text"
+        id="boletos"
+        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base block w-full px-3 py-2.5"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="tarjeta" class="block mb-1 text-sm font-medium text-heading">
+        Tarjeta
+      </label>
+
+      <input
+        formControlName="tarjeta"
+        type="text"
+        id="tarjeta"
+        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base block w-full px-3 py-2.5"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="total" class="block mb-1 text-sm font-medium text-heading">
+        Total
+      </label>
+
+      <input
+        formControlName="total"
+        type="text"
+        id="total"
+        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base block w-full px-3 py-2.5"
+        required
+      />
+    </div>
+
+    <div class="flex gap-2 pt-3">
+
+      <button type="submit" class="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+        Terminar
+      </button>
+    </div>
+
+  </form>
+</div>
+
+
+<!-- Tabla de clientes -->
+<div class="max-w-6xl mx-auto mt-8">
+
+  <h2 class="mb-4 text-2xl font-bold text-gray-900">
+    Lista de clientes
+  </h2>
+
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+    <table class="w-full text-sm text-left text-gray-500">
+
+      <!-- Encabezado -->
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Nombre
+          </th>
+
+          <th scope="col" class="px-6 py-3">
+            Compradores
+          </th>
+
+          <th scope="col" class="px-6 py-3">
+            Boletos
+          </th>
+
+          <th scope="col" class="px-6 py-3">
+            Tarjeta
+          </th>
+
+          <th scope="col" class="px-6 py-3">
+            Total
+          </th>
+
+          <th scope="col" class="px-6 py-3">
+            Acciones
+          </th>
+        </tr>
+
+      </thead>
+
+      <!-- Datos -->
+      <tbody>
+
+        <tr
+          *ngFor="let clientes of cliente; let i = index"
+          class="bg-white border-b border-gray-200 hover:bg-gray-50"
+        >
+
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+            {{ clientes.nombre }}
+          </td>
+
+          <td class="px-6 py-4">
+            {{ clientes.compradores }}
+          </td>
+
+          <td class="px-6 py-4">
+            {{ clientes.boletos }}
+          </td>
+
+          <td class="px-6 py-4">
+            {{ clientes.tarjeta }}
+          </td>
+
+          <td class="px-6 py-4">
+            {{ clientes.total }}
+          </td>
+
+          <td class="px-6 py-4">
+
+            <div class="flex gap-2">
+
+              <!-- Botón Editar -->
+              <button
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
+                (click)="editarClientes(i)"
+              >
+                Editar
+              </button>
+
+              <!-- Botón Eliminar -->
+              <button
+                type="button"
+                class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"
+                (click)="eliminarClientes(i)"
+              >
+                Eliminar
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- Mensaje cuando no existen clientes -->
+  <div
+    *ngIf="cliente.length === 0"
+    class="p-4 mt-4 text-sm text-gray-800 rounded-lg bg-gray-100"
+    role="alert"
+  >
+    <span class="font-medium">Información:</span>
+    No hay clientes registrados.
+  </div>
+
+</div>

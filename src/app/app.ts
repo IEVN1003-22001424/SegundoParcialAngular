@@ -10,6 +10,7 @@ import { Navbar } from './navbar/navbar'
 import { Distancia } from './formularios/distancia/distancia'
 import { ListaEscuela } from './escuela/lista-escuela/lista-escuela'
 import { Cinepolis } from './escuela/cinepolis/cinepolis'
+import { Ventas } from './escuela/ventas/ventas';
 
 @Component({
   imports: [
@@ -19,7 +20,8 @@ import { Cinepolis } from './escuela/cinepolis/cinepolis'
     FormsModule,
     Navbar,
     Distancia,
-    ListaEscuela
+    ListaEscuela,
+    Ventas,
   ],
   standalone: true,
   selector: 'app-root',

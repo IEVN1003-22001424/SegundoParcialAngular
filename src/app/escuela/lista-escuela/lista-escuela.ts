@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Alumno } from '../alumno' 
 
 interface IAlumno {
   matricula: string;
@@ -14,14 +13,17 @@ interface IAlumno {
 @Component({
   selector: 'app-lista-escuela',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './lista-escuela.html',
   styleUrl: './lista-escuela.css'
 })
-export class ListaEscuela {
+export class ListaEscuela implements OnInit {
+
+  indiceEdicion: number = -1;
 
   formulario!: FormGroup;
-  alumnos:IAlumno[]=[]
+
+  alumnos: IAlumno[] = [];
 
   nuevoAlumno: IAlumno = {
     matricula: '',
@@ -31,70 +33,146 @@ export class ListaEscuela {
   };
 
   ngOnInit(): void {
-    this.cargarAlumno()
+
     this.formulario = new FormGroup({
       matricula: new FormControl(''),
       nombre: new FormControl(''),
       correo: new FormControl(''),
       materia: new FormControl('')
     });
+
+    this.cargarAlumno();
   }
 
-  agregarAlumno(): void{
-    if(
+  agregarAlumno(): void {
 
-      this.nuevoAlumno.matricula == '' ||
-
-      this.nuevoAlumno.nombre == '' ||
-
-      this.nuevoAlumno.correo == '' ||
-
-      this.nuevoAlumno.materia== '' 
-
-    ){
-
-      alert('Llena todos los campos porfavor');
+    if (
+      this.nuevoAlumno.matricula.trim() === '' ||
+      this.nuevoAlumno.nombre.trim() === '' ||
+      this.nuevoAlumno.correo.trim() === '' ||
+      this.nuevoAlumno.materia.trim() === ''
+    ) {
+      alert('Llena todos los campos por favor');
       return;
+    }
+
+    if (this.indiceEdicion !== -1) {
+
+      // Actualizar el alumno existente.
+      this.alumnos[this.indiceEdicion] = {
+        ...this.nuevoAlumno
+      };
+
+    } else {
+
+      // Agregar un alumno nuevo una sola vez.
+      this.alumnos.push({
+        ...this.nuevoAlumno
+      });
 
     }
-    //Spread (...) Sirve para compartir, copiar o combinar los elementos de un objeto 
-    //o las propiedades dentro de una lista.
-    this.alumnos.push({...this.nuevoAlumno})
 
-    //LocalStorage no es una base de datos temporal, sino una característica de almacenamiento 
-    //web nativa del navegador que permite guardar datos de manera permanente
+    // Guardar la lista actualizada en LocalStorage.
     localStorage.setItem(
-
       'alumnos',
       JSON.stringify(this.alumnos)
+    );
 
-    )
+    // Limpiar el formulario y salir del modo edición.
+    this.limpiarCampos();
   }
 
   muestraAlumno(): void {
 
-    this.nuevoAlumno.matricula = this.formulario.value.matricula;
+    this.nuevoAlumno.matricula = this.formulario.value.matricula ?? '';
+    this.nuevoAlumno.nombre = this.formulario.value.nombre ?? '';
+    this.nuevoAlumno.correo = this.formulario.value.correo ?? '';
+    this.nuevoAlumno.materia = this.formulario.value.materia ?? '';
 
-    this.nuevoAlumno.nombre = this.formulario.value.nombre;
-
-    this.nuevoAlumno.correo = this.formulario.value.correo;
-
-    this.nuevoAlumno.materia = this.formulario.value.materia;
-    
-    this.agregarAlumno()
-
+    this.agregarAlumno();
   }
 
-  cargarAlumno(): void{
+  cargarAlumno(): void {
 
     const datos = localStorage.getItem('alumnos');
 
-    if (datos){
+    if (datos) {
 
-      this.alumnos = JSON.parse(datos);
+      try {
+        this.alumnos = JSON.parse(datos) as IAlumno[];
+      } catch (error) {
+        console.error('Error al cargar los alumnos:', error);
+        this.alumnos = [];
+      }
 
     }
 
+  }
+
+  eliminarAlumno(index: number): void {
+
+    this.alumnos.splice(index, 1);
+
+    localStorage.setItem(
+      'alumnos',
+      JSON.stringify(this.alumnos)
+    );
+
+    // Si se elimina el alumno que se estaba editando,
+    // limpiar el formulario.
+    if (this.indiceEdicion === index) {
+
+      this.limpiarCampos();
+
+    } else if (this.indiceEdicion > index) {
+
+      // Ajustar el índice si se elimina un elemento anterior.
+      this.indiceEdicion--;
+
+    }
+
+  }
+
+  editarAlumnos(index: number): void {
+
+    // Obtener el alumno seleccionado.
+    const alumno = this.alumnos[index];
+
+    // Copiar sus datos al objeto de edición.
+    this.nuevoAlumno = {
+      ...alumno
+    };
+
+    // Mostrar sus datos en el formulario.
+    this.formulario.patchValue({
+      matricula: alumno.matricula,
+      nombre: alumno.nombre,
+      correo: alumno.correo,
+      materia: alumno.materia
+    });
+
+    // Activar el modo edición.
+    this.indiceEdicion = index;
+  }
+
+  limpiarCampos(): void {
+
+    this.nuevoAlumno = {
+      matricula: '',
+      nombre: '',
+      correo: '',
+      materia: ''
+    };
+
+    this.formulario.reset({
+      matricula: '',
+      nombre: '',
+      correo: '',
+      materia: ''
+    });
+
+    // Volver al modo de registro nuevo.
+    this.indiceEdicion = -1;
   }
 
 }
